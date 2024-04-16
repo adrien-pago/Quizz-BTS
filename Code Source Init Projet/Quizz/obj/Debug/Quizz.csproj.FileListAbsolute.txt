@@ -1,0 +1,52 @@
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz\Quizz\bin\Debug\Quizz.exe.config
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.exe.config
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.exe.config
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.exe
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.pdb
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Data.dll
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Data.Entity.dll
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Web.dll
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.csprojResolveAssemblyReference.cache
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.Properties.Resources.resources
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.frmQuizz.resources
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.csproj.GenerateResource.Cache
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.exe
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.pdb
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.exe
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.pdb
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.exe
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.pdb
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Data.dll
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Data.Entity.dll
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Web.dll
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.csprojResolveAssemblyReference.cache
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.Properties.Resources.resources
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.frmQuizz.resources
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.csproj.GenerateResource.Cache
+P:\CPNV-ste-croix\2eme annee\trimestre 1\ICT-226A\Quizz\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.frmQuestion.resources
+E:\Users\Rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.frmQuestion.resources
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.exe.config
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.exe
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.pdb
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.exe
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\Quizz.pdb
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Data.dll
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Data.Entity.dll
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\bin\Debug\MySql.Web.dll
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.csprojResolveAssemblyReference.cache
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.Properties.Resources.resources
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.frmQuestion.resources
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.frmQuizz.resources
+C:\Users\rapha\Desktop\git\Quizz-ICT-226A\Quizz\Quizz\obj\Debug\Quizz.csproj.GenerateResource.Cache
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\bin\Debug\Quizz.exe.config
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\bin\Debug\Quizz.exe
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\bin\Debug\Quizz.pdb
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.csproj.AssemblyReference.cache
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.Properties.Resources.resources
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.frmQuestion.resources
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.frmQuizz.resources
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.csproj.GenerateResource.cache
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.csproj.CoreCompileInputs.cache
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.csproj.Up2Date
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.exe
+C:\Users\adrie\source\repos\Quizz-ICT-226A\Quizz\obj\Debug\Quizz.pdb
