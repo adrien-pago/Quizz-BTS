@@ -77,7 +77,6 @@ namespace Quizz
                     }
                     lstJoueur.Clear();
                     cmdAjouterLePseudo.Enabled = true;
-                    cmdDebut.Enabled = false;
                 }
                 else
                 {
@@ -122,11 +121,6 @@ namespace Quizz
             {
                 Classement.Items.Add("Aucun joueur trouvé.");
             }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -3,24 +3,34 @@
   "WorkspaceRootPath": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|c:\\users\\adrie\\source\\repos\\quizz-bts\\quizz\\connection_mysql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\connection_mysql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|c:\\users\\adrie\\source\\repos\\quizz-bts\\quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|Quizz||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\quizz\\frmquizz.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquizz.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\quizz\\frmquestion.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquestion.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\quizz\\frmquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\quizz\\frmquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|c:\\users\\adrie\\source\\repos\\quizz-bts\\quizz\\frmquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|c:\\users\\adrie\\source\\repos\\quizz-bts\\quizz\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|c:\\users\\adrie\\source\\repos\\quizz-bts\\quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|solutionrelative:quizz\\frmquizz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650D3028-1CD8-488E-8B0F-8B54534F0A11}|Quizz\\Quizz.csproj|c:\\users\\adrie\\source\\repos\\quizz-bts\\quizz\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,64 +40,87 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "frmQuestion.cs",
-              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.cs",
-              "RelativeDocumentMoniker": "Quizz\\frmQuestion.cs",
-              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.cs",
-              "RelativeToolTip": "Quizz\\frmQuestion.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAQwA4AAAArAAAA",
+              "DocumentIndex": 0,
+              "Title": "Connection_mySQL.cs",
+              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\Connection_mySQL.cs",
+              "RelativeDocumentMoniker": "Quizz\\Connection_mySQL.cs",
+              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\Connection_mySQL.cs",
+              "RelativeToolTip": "Quizz\\Connection_mySQL.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-15T12:47:45.725Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\Program.cs",
-              "RelativeDocumentMoniker": "Quizz\\Program.cs",
-              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\Program.cs",
-              "RelativeToolTip": "Quizz\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-19T07:40:09.55Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "frmQuizz.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuizz.Designer.cs",
-              "RelativeDocumentMoniker": "Quizz\\frmQuizz.Designer.cs",
-              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuizz.Designer.cs",
-              "RelativeToolTip": "Quizz\\frmQuizz.Designer.cs",
-              "ViewState": "AQIAAFIAAAAAAAAAAAD4v14AAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-16T08:56:13.15Z",
+              "WhenOpened": "2024-04-19T13:49:26.327Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Quizz",
+              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\Quizz.csproj",
+              "RelativeDocumentMoniker": "Quizz\\Quizz.csproj",
+              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\Quizz.csproj",
+              "RelativeToolTip": "Quizz\\Quizz.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-04-19T13:48:41.501Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "frmQuestion.cs",
+              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.cs",
+              "RelativeDocumentMoniker": "Quizz\\frmQuestion.cs",
+              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.cs",
+              "RelativeToolTip": "Quizz\\frmQuestion.cs",
+              "ViewState": "AQIAADEAAAAAAAAAAIAwwD4AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T11:58:01.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "frmQuestion.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.Designer.cs",
+              "RelativeDocumentMoniker": "Quizz\\frmQuestion.Designer.cs",
+              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.Designer.cs",
+              "RelativeToolTip": "Quizz\\frmQuestion.Designer.cs",
+              "ViewState": "AQIAAJ8AAAAAAAAAAAD4v60AAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T11:15:31.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "frmQuestion.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.cs",
+              "RelativeDocumentMoniker": "Quizz\\frmQuestion.cs",
+              "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuestion.cs [Design]",
+              "RelativeToolTip": "Quizz\\frmQuestion.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T11:10:24.273Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "frmQuizz.cs",
               "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuizz.cs",
               "RelativeDocumentMoniker": "Quizz\\frmQuizz.cs",
               "ToolTip": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuizz.cs",
               "RelativeToolTip": "Quizz\\frmQuizz.cs",
-              "ViewState": "AQIAAGUAAAAAAAAAAAAtwIAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE4AAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-15T13:20:26.645Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "frmQuizz.cs [Design]",
               "DocumentMoniker": "C:\\Users\\adrie\\source\\repos\\Quizz-BTS\\Quizz\\frmQuizz.cs",
               "RelativeDocumentMoniker": "Quizz\\frmQuizz.cs",
