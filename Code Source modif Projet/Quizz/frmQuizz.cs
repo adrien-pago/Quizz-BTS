@@ -9,13 +9,16 @@ namespace Quizz
         private Connection_mySQL connection;
         private Joueur joueur;
 
+        //à L'init de la page
         public frmQuizz()
         {
             InitializeComponent();
             connection = new Connection_mySQL();
             joueur = new Joueur(); // Initialisation de l'objet joueur
-        }
+            LoadClassement();// Affiche le classement avec la fonction LoadClassement
 
+        }
+        // Créer un new compte user
         private void cmdAjouterLePseudo_Click(object sender, EventArgs e)
         {
             string username = txtPseudo.Text.Trim();
@@ -47,32 +50,47 @@ namespace Quizz
                 MessageBox.Show("Veuillez remplir tous les champs.");
             }
         }
-
+        //Lancer le quizz en vérifiant le compte avant
         private void cmdDebut_Click(object sender, EventArgs e)
         {
-            Connection_mySQL bdd = new Connection_mySQL();
+            string username = txtPseudo.Text.Trim();
+            string password = txtPassword.Text;
 
-            frmQuestion question = new frmQuestion(joueur);
-
-            question.ShowDialog();
-
-            bdd.UpdateScore(joueur.Pseudo, joueur.Score);
-            txtPseudo.Text = "";
-            List<Joueur> lstJoueur = bdd.selectJoueur();
-
-            if (lstJoueur.Count > 0)
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                Classement.Items.Clear();
-                foreach (Joueur j in lstJoueur)
+                if (connection.ValidateUser(username, password))
                 {
-                    Classement.Items.Add(j.ToString());
+                    frmQuestion question = new frmQuestion(joueur);
+                    question.ShowDialog();
+
+                    Connection_mySQL bdd = new Connection_mySQL();
+                    bdd.UpdateScore(joueur.Pseudo, joueur.Score);
+                    List<Joueur> lstJoueur = bdd.selectJoueur();
+
+                    if (lstJoueur.Count > 0)
+                    {
+                        Classement.Items.Clear();
+                        foreach (Joueur j in lstJoueur)
+                        {
+                            Classement.Items.Add(j.ToString());
+                        }
+                    }
+                    lstJoueur.Clear();
+                    cmdAjouterLePseudo.Enabled = true;
+                    cmdDebut.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("Le pseudo ou le mot de passe est incorrect.");
                 }
             }
-            lstJoueur.Clear();
-            cmdAjouterLePseudo.Enabled = true;
-            cmdDebut.Enabled = false;
+            else
+            {
+                MessageBox.Show("Veuillez saisir le pseudo et le mot de passe.");
+            }
         }
 
+        //Charger le quizz et mettre à jour liste des joueurs
         private void frmQuizz_Load(object sender, EventArgs e)
         {
             List<Joueur> lstJoueur = connection.selectJoueur();
@@ -86,12 +104,27 @@ namespace Quizz
             }
         }
 
-        private void txtPseudo_TextChanged(object sender, EventArgs e)
+        //Afficher le scoore des anciennes parties
+        private void LoadClassement()
         {
+            Classement.Items.Clear();  //nom de la ListBox 
 
+            List<Joueur> lstJoueur = connection.selectJoueur();
+            if (lstJoueur.Count > 0)
+            {
+                foreach (Joueur j in lstJoueur)
+                {
+                    string displayText = $"{j.Pseudo} - Score: {j.Score}";
+                    Classement.Items.Add(displayText);
+                }
+            }
+            else
+            {
+                Classement.Items.Add("Aucun joueur trouvé.");
+            }
         }
 
-        private void lstClassement_SelectedIndexChanged(object sender, EventArgs e)
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

@@ -18,7 +18,7 @@ namespace Quizz
         {
             Initialize();
         }
-
+        // base de donné test
         private void Initialize()
         {
             server = "localhost";
@@ -28,7 +28,7 @@ namespace Quizz
             string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};";
             connection = new MySqlConnection(connectionString);
         }
-
+        //Ouvrir la connection
         private bool OpenConnection()
         {
             try
@@ -50,7 +50,7 @@ namespace Quizz
                 return false;
             }
         }
-
+        // fermer la connection
         private bool CloseConnection()
         {
             try
@@ -64,7 +64,7 @@ namespace Quizz
                 return false;
             }
         }
-
+        //Ajouter un new user à la base de donné
         public bool AddUser(string nomJoueur, string password)
         {
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
@@ -92,7 +92,7 @@ namespace Quizz
             }
             return false;
         }
-
+        //Vérifier si l'user existe déjà en base de donné avant de l'insérer
         public bool UserExists(string nomJoueur)
         {
             if (OpenConnection())
@@ -107,7 +107,44 @@ namespace Quizz
             }
             return false;
         }
+        //Vérifier le compte avant de lancé le quizz
+        public bool ValidateUser(string username, string password)
+        {
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT PASSWORD_USER FROM Joueurs WHERE Pseudo = @Pseudo", connection);
+                cmd.Parameters.AddWithValue("@Pseudo", username);
 
+                try
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)  // Vérifiers que le résultat n'est pas null sinon on a une erreur quand on vérifie le sel du hash
+                    {
+                        string storedHash = result.ToString();
+                        if (!string.IsNullOrEmpty(storedHash) && BCrypt.Net.BCrypt.Verify(password, storedHash))
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Aucun utilisateur trouvé avec ce pseudo.");
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    CloseConnection();
+                }
+            }
+            return false;
+        }
+
+
+        // récupérer une liste de question
         public List<Question> selectQuestion()
         {
             List<Question> lstQuestions = new List<Question>();
@@ -136,7 +173,7 @@ namespace Quizz
 
             return lstQuestions;
         }
-
+        //Mettre à jours le tableau des scoores
         public void UpdateScore(string pseudo, int score)
         {
             if (OpenConnection())
@@ -148,7 +185,7 @@ namespace Quizz
                 CloseConnection();
             }
         }
-
+        //afficher liste des joueurs et leur scoores
         public List<Joueur> selectJoueur()
         {
             List<Joueur> lstJoueur = new List<Joueur>();
