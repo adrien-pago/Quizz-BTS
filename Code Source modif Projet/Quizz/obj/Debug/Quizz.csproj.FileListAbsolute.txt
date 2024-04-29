@@ -72,3 +72,4 @@ C:\Users\adrie\Source\Repos\Quizz-BTS\Quizz\bin\Debug\System.Buffers.xml
 C:\Users\adrie\Source\Repos\Quizz-BTS\Quizz\bin\Debug\System.Memory.xml
 C:\Users\adrie\Source\Repos\Quizz-BTS\Quizz\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\adrie\Source\Repos\Quizz-BTS\Quizz\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\adrie\source\repos\Quizz-BTS\Quizz\obj\Debug\Quizz.frmCategorie.resources

@@ -60,8 +60,12 @@ namespace Quizz
             {
                 if (connection.ValidateUser(username, password))
                 {
-                    frmQuestion question = new frmQuestion(joueur);
-                    question.ShowDialog();
+                    // frmQuestion question = new frmQuestion(joueur);
+                    // question.ShowDialog();
+
+                    //Lance la fenetre de choix de la catégorie
+                    frmCategorie categorie = new frmCategorie(joueur);
+                    categorie.ShowDialog();
 
                     Connection_mySQL bdd = new Connection_mySQL();
                     bdd.UpdateScore(joueur.Pseudo, joueur.Score);
@@ -77,6 +81,7 @@ namespace Quizz
                     }
                     lstJoueur.Clear();
                     cmdAjouterLePseudo.Enabled = true;
+                    cmdDebut.Enabled = false;
                 }
                 else
                 {
@@ -103,7 +108,7 @@ namespace Quizz
             }
         }
 
-        //Afficher le scoore des anciennes parties
+        //Afficher le score des anciennes parties
         private void LoadClassement()
         {
             Classement.Items.Clear();  //nom de la ListBox 
@@ -121,6 +126,11 @@ namespace Quizz
             {
                 Classement.Items.Add("Aucun joueur trouvé.");
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

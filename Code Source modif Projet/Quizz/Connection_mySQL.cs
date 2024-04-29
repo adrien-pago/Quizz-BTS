@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using BCrypt.Net;
+using System.Diagnostics;
 
 namespace Quizz
 {
@@ -22,7 +23,7 @@ namespace Quizz
         private void Initialize()
         {
             server = "localhost";
-            database = "Quizz";
+            database = "quizz";
             uid = "root";
             password = "";
             string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};";
@@ -145,13 +146,14 @@ namespace Quizz
 
 
         // récupérer une liste de question
-        public List<Question> selectQuestion()
+        public List<Question> selectQuestion(string categorie)
         {
+            Debug.WriteLine(categorie);
             List<Question> lstQuestions = new List<Question>();
 
             if (OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT Nom, Question, Reponse_1, Reponse_2, Reponse_3, Bonne FROM question INNER JOIN categories ON idCategories = Fkcategories ORDER BY idQuestion", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Nom, Question, Reponse_1, Reponse_2, Reponse_3, Bonne FROM question INNER JOIN categories ON idCategories = Fkcategories AND Fkcategories = '"+categorie+"' ORDER BY idQuestion", connection);
 
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
