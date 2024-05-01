@@ -16,12 +16,13 @@ namespace Quizz
         Joueur joueur;
 
 
-        public frmCategorie(Joueur joueur)
+        public frmCategorie(Joueur joueur) // Constructeur de la classe
         {
             InitializeComponent();
             this.joueur = joueur;
         }
 
+        // Événement de chargement du formulaire
         private void frmCategorie_Load(object sender, EventArgs e)
         {
 
@@ -43,9 +44,10 @@ namespace Quizz
                 cmdChoice(categorie);
             }     
         }
+        // Méthode pour gérer le choix de la catégorie
         private void cmdChoice(string categorie)
         {
-            frmQuestion question = new frmQuestion(joueur, categorie);
+            frmQuestion question = new frmQuestion(joueur, categorie); // Passer la catégorie sélectionnée 
             if (question.NombreQuestionTotal == 0)
             {
                 MessageBox.Show("Pas de question pour cette catégorie");
@@ -55,10 +57,6 @@ namespace Quizz
                 question.ShowDialog();
                 Dispose();
             }
-
-
-
         }
-
-    }
+    }   
 }

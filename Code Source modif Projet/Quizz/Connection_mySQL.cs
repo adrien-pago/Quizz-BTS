@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Quizz
 {
-    class Connection_mySQL
+    class Connection_mySQL // Classe gérant la connexion à la base de données MySQL
     {
         private MySqlConnection connection;
         private string server;
@@ -15,12 +15,11 @@ namespace Quizz
         private string uid;
         private string password;
 
-        public Connection_mySQL()
+        public Connection_mySQL() // Constructeur de la classe
         {
             Initialize();
         }
-        // base de donné test
-        private void Initialize()
+        private void Initialize()// base de donné test
         {
             server = "localhost";
             database = "quizz";
@@ -29,8 +28,7 @@ namespace Quizz
             string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};";
             connection = new MySqlConnection(connectionString);
         }
-        //Ouvrir la connection
-        private bool OpenConnection()
+        private bool OpenConnection()  // Méthode pour ouvrir la connexion à la base de données
         {
             try
             {
@@ -51,8 +49,8 @@ namespace Quizz
                 return false;
             }
         }
-        // fermer la connection
-        private bool CloseConnection()
+       
+        private bool CloseConnection() // fermer la connection
         {
             try
             {
@@ -66,7 +64,7 @@ namespace Quizz
             }
         }
         //Ajouter un new user à la base de donné
-        public bool AddUser(string nomJoueur, string password)
+        public bool AddUser(string nomJoueur, string password)   
         {
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
             if (OpenConnection())

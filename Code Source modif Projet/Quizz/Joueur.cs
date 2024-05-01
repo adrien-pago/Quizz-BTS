@@ -17,6 +17,7 @@ namespace Quizz
         public int Score { get; set; }
         public string Password { get; set; } // Ajout du mot de passe
 
+        // Méthode pour afficher le joueur sous forme de chaîne de caractères
         public override string ToString()
         {
             string chaine = Pseudo + "- Score: " + Score;
