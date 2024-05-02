@@ -31,7 +31,7 @@ namespace Quizz
             connection = new MySqlConnection(connectionString);
         }
 
-        private bool OpenConnection()  // Méthode pour ouvrir la connexion à la base de données
+        public bool OpenConnection()  // Méthode pour ouvrir la connexion à la base de données
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Quizz
             }
         }
 
-        private bool CloseConnection() // fermer la connection
+        public bool CloseConnection() // fermer la connection
         {
             try
             {
@@ -147,35 +147,57 @@ namespace Quizz
 
 
         // récupérer une liste de question
+        // récupérer une liste de question
         public List<Question> selectQuestion(string categorie)
         {
-            Debug.WriteLine(categorie);
+            // Ajouter une instruction de débogage pour vérifier la valeur de la catégorie
+            Debug.WriteLine("Valeur de la catégorie : " + categorie);
+            MessageBox.Show("Valeur de la catégorie : " + categorie);
+
             List<Question> lstQuestions = new List<Question>();
 
             if (OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT Nom, Question, Reponse_1, Reponse_2, Reponse_3, Bonne FROM question INNER JOIN categories ON idCategories = Fkcategories AND Fkcategories = '" + categorie + "' ORDER BY idQuestion", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Nom, Question, Reponse_1, Reponse_2, Reponse_3, Bonne FROM question " +
+                    "INNER JOIN categories ON idCategories = Fkcategories AND Fkcategories = @categorie ORDER BY idQuestion", connection);
+
+                // Utilisation de paramètres SQL pour la catégorie
+                cmd.Parameters.AddWithValue("@categorie", categorie);
 
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        Question quest = new Question();
-                        quest.Categories = reader["Nom"].ToString();
-                        quest.NomQuestion = reader["Question"].ToString();
-                        quest.ReponseA = reader["Reponse_1"].ToString();
-                        quest.ReponseB = reader["Reponse_2"].ToString();
-                        quest.ReponseC = reader["Reponse_3"].ToString();
-                        quest.BonneReponse = Convert.ToInt32(reader["Bonne"]);
-                        lstQuestions.Add(quest);
+                        Debug.WriteLine("Des données ont été retournées pour la catégorie : " + categorie);
+                        while (reader.Read())
+                        {
+                            Question quest = new Question();
+                            quest.Categories = reader["Nom"].ToString();
+                            quest.NomQuestion = reader["Question"].ToString();
+                            quest.ReponseA = reader["Reponse_1"].ToString();
+                            quest.ReponseB = reader["Reponse_2"].ToString();
+                            quest.ReponseC = reader["Reponse_3"].ToString();
+                            quest.BonneReponse = Convert.ToInt32(reader["Bonne"]);
+                            lstQuestions.Add(quest);
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Aucune donnée n'a été retournée pour la catégorie : " + categorie);
                     }
                 }
 
                 CloseConnection();
             }
+            else
+            {
+                Debug.WriteLine("La connexion à la base de données n'a pas pu être ouverte.");
+            }
 
             return lstQuestions;
         }
+
+
 
         // Mettre à jour le nouveau score en base de données ou bien modifier si le joueur a déjà joué dans la catégorie
         public void UpdateScore(Score score)
@@ -241,9 +263,5 @@ namespace Quizz
             }
             return scoresByCategory;
         }
-
-
-
-
     }
 }

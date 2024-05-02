@@ -191,6 +191,16 @@ namespace Quizz
 
         }
 
+        private void btnExtractQuizz_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
         #endregion

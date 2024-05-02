@@ -9,7 +9,7 @@ namespace Quizz
     {
         private Connection_mySQL connection;
         private Joueur joueur;
-        private Score Score;
+        private Score Score = new Score(); // Initialiser le champ Score avec une instance de Score
         private List<Question> lstQuestions; // Ajout de la liste de questions
 
         // Initialisation de la page
@@ -55,43 +55,43 @@ namespace Quizz
         }
 
         // Afficher les scores dans les différents tableaux en fonction des catégories
-        private void LoadScoresByCategory()
+        public void LoadScoresByCategory()
         {
-            Dictionary<int, List<Joueur>> scoresByCategory = connection.SelectScoresByCategory();
+            Dictionary<int, List<Score>> scoresByCategory = connection.SelectScoresByCategory();
 
-            foreach (KeyValuePair<string, List<Joueur>> entry in scoresByCategory)
+            foreach (KeyValuePair<int, List<Score>> entry in scoresByCategory)
             {
-                string category = entry.Key;
-                List<Joueur> scores = entry.Value;
+                int category = entry.Key;
+                List<Score> scores = entry.Value;
 
                 switch (category)
                 {
-                    case "1":
+                    case 1:
                         Mathématique.Items.Clear();
-                        foreach (Joueur joueur in scores)
+                        foreach (Score score in scores)
                         {
-                            Mathématique.Items.Add(joueur.ToString());
+                            Mathématique.Items.Add(score.ToString());
                         }
                         break;
-                    case "3":
+                    case 3:
                         Culture.Items.Clear();
-                        foreach (Joueur joueur in scores)
+                        foreach (Score score in scores)
                         {
-                            Culture.Items.Add(joueur.ToString());
+                            Culture.Items.Add(score.ToString());
                         }
                         break;
-                    case "2":
+                    case 2:
                         Programmation.Items.Clear();
-                        foreach (Joueur joueur in scores)
+                        foreach (Score score in scores)
                         {
-                            Programmation.Items.Add(joueur.ToString());
+                            Programmation.Items.Add(score.ToString());
                         }
                         break;
-                    case "4": // Afficher dans le tableau de toutes les catégories
+                    case 4: // Afficher dans le tableau de toutes les catégories
                         Classement.Items.Clear();
-                        foreach (Joueur joueur in scores)
+                        foreach (Score score in scores)
                         {
-                            Classement.Items.Add(joueur.ToString());
+                            Classement.Items.Add(score.ToString());
                         }
                         break;
                 }
@@ -103,34 +103,24 @@ namespace Quizz
         {
             string username = txtPseudo.Text.Trim();
             string password = txtPassword.Text;
-            string categorie = ""; // Déclarer la variable categorie
-            if (Mathématique.SelectedItem != null)
-                    {
-                categorie = "1";
-            }
-            else if (Programmation.SelectedItem != null)
-                    {
-                categorie = "2";
-            }
-            else if (Culture.SelectedItem != null)
-                    {
-                categorie = "3";
-            }
 
-            Score = new Score(); // Créer une nouvelle instance de Score
-            Score.Pseudo = username;
-            Score.Categorie = Convert.ToInt32(categorie); // Convertir la catégorie en entier
-            Score.Time = TimeSpan.Zero; // Initialiser le temps à zéro
+            // Lance la fenêtre de sélection de catégorie
+            frmCategorie categorieForm = new frmCategorie(joueur, connection, lstQuestions);
+            DialogResult result = categorieForm.ShowDialog();
 
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            // Si l'utilisateur a sélectionné une catégorie et a cliqué sur "OK"
+            if (result == DialogResult.OK && !string.IsNullOrEmpty(categorieForm.SelectedCategorie))
             {
-                // Assurez-vous que le pseudo est défini avant de continuer
-                joueur.Pseudo = username;
+                string categorie = categorieForm.SelectedCategorie; // Récupérer la catégorie sélectionnée
 
-                if (connection.ValidateUser(username, password))
+                // Chargez la liste de questions
+                lstQuestions = connection.selectQuestion(categorieForm.SelectedCategorie);
+
+                // Si la liste de questions est chargée avec succès
+                if (lstQuestions != null && lstQuestions.Count > 0)
                 {
-                    // Passer l'instance de Connection_mySQL et la liste de questions au formulaire frmQuestion
-                    frmQuestion question = new frmQuestion(joueur, categorie, connection, lstQuestions);
+                    // Passez la liste de questions à frmQuestion
+                    frmQuestion question = new frmQuestion(joueur, categorieForm.SelectedCategorie, connection, lstQuestions);
                     question.FormClosed += (s, args) => // Événement de fermeture du formulaire frmQuestion
                     {
                         // Mise à jour du score dans la base de données après la fermeture du formulaire frmQuestion
@@ -146,12 +136,8 @@ namespace Quizz
                 }
                 else
                 {
-                    MessageBox.Show("Le pseudo ou le mot de passe est incorrect.");
+                    MessageBox.Show("Aucune question trouvée pour cette catégorie.");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Veuillez saisir le pseudo et le mot de passe.");
             }
         }
     }

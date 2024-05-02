@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Quizz;
 
@@ -10,6 +11,8 @@ namespace Quizz
         private Joueur joueur;
         private Connection_mySQL connection;
         private List<Question> lstQuestions; // Ajout de la liste de questions
+
+        public string SelectedCategorie { get; internal set; }
 
         public frmCategorie(Joueur joueur, Connection_mySQL connection, List<Question> lstQuestions) // Modification du constructeur
         {
@@ -45,10 +48,16 @@ namespace Quizz
         // Méthode pour gérer le choix de la catégorie
         private void cmdChoice(string categorie)
         {
-            frmQuestion question = new frmQuestion(joueur, categorie, connection, lstQuestions);
+            // Convertissez la catégorie en int si nécessaire
+            int categorieId = Convert.ToInt32(categorie);
+            frmQuestion question = new frmQuestion(joueur, categorieId, connection, lstQuestions);
+     
+            // Ajoutez un message de débogage pour vérifier la valeur de NombreQuestionTotal
+            Debug.WriteLine("Nombre total de questions pour la catégorie " + categorie + " : " + question.NombreQuestionTotal);
+
             if (question.NombreQuestionTotal == 0)
             {
-                MessageBox.Show("Pas de question pour cette catégorie");
+                MessageBox.Show("Pas de question pour cette catégorie. Valeur de la catégorie : " + categorie);
             }
             else
             {

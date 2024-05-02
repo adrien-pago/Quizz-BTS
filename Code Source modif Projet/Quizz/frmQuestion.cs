@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -24,6 +25,8 @@ namespace Quizz
         private int Categorie;
         private Connection_mySQL connection;
         private bool isPaused;
+        private string selectedCategorie;
+        private List<Question> lstQuestions;
 
         public int NombreQuestionTotal
         {
@@ -31,7 +34,7 @@ namespace Quizz
         }
 
         // Constructeur de la classe
-        public frmQuestion(Joueur joueur, string categorie, Connection_mySQL connection, List<Question> lstquest)
+        public frmQuestion(Joueur joueur, int categorie, Connection_mySQL connection, List<Question> lstquest)
         {
             InitializeComponent();
             this.connection = connection; // Utiliser la connexion passée
@@ -62,38 +65,44 @@ namespace Quizz
             this.FormClosed += new FormClosedEventHandler(frmQuestion_FormClosed);
         }
 
+        public frmQuestion(Joueur joueur, string selectedCategorie, Connection_mySQL connection, List<Question> lstQuestions)
+        {
+            this.joueur = joueur;
+            this.selectedCategorie = selectedCategorie;
+            this.connection = connection;
+            this.lstQuestions = lstQuestions;
+        }
+
 
         // Événement de chargement du formulaire
         private void frmQuestion_Load(object sender, EventArgs e)
         {
-            if (lstquest != null && lstquest.Count > 0)
+            if (nombreQuestionTotal == 0)
             {
-                // Instanciation de l'objet Score avec les valeurs initiales
-                Quizz.Score scoreObject = new Quizz.Score();
-                scoreObject.Pseudo = "nom_du_joueur";
-                scoreObject.Value = 0;
-                scoreObject.Time = TimeSpan.Zero;
-                scoreObject.Categorie = 0;
+                // Affichez un message indiquant qu'il n'y a pas de questions disponibles
+                MessageBox.Show("Aucune question n'est disponible pour cette catégorie.");
+                // Fermez le formulaire
+                this.Close();
+                return;
+            }
 
-                // Affichage de la première question
-                Question quest = lstquest[0];
-                lblCat.Text = quest.Categories;
-                lblQuestion.Text = quest.NomQuestion;
-                cmdReponseA.Text = quest.ReponseA;
-                cmdReponseB.Text = quest.ReponseB;
-                cmdReponseC.Text = quest.ReponseC;
-                bonneReponseQ = quest.BonneReponse;
-                QuestionActuelle = 1;
-                prgQuestion.Increment(1);
-                tmr1s.Start();
-            }
-            else
-            {
-                MessageBox.Show("Aucune question n'a été chargée.");
-                this.Close(); // Fermer le formulaire si aucune question n'a été chargée
-            }
+            // Affichez la première question
+            AfficherQuestion(0);
+            tmr1s.Start();
         }
 
+        private void AfficherQuestion(int index)
+        {
+            Question quest = lstquest[index];
+            lblCat.Text = quest.Categories;
+            lblQuestion.Text = quest.NomQuestion;
+            cmdReponseA.Text = quest.ReponseA;
+            cmdReponseB.Text = quest.ReponseB;
+            cmdReponseC.Text = quest.ReponseC;
+            bonneReponseQ = quest.BonneReponse;
+            QuestionActuelle = index + 1;
+            prgQuestion.Increment(1);
+        }
 
         // Méthodes pour gérer les clics sur les boutons de réponse
         private void cmdReponseA_Click(object sender, EventArgs e)
@@ -223,15 +232,7 @@ namespace Quizz
                     cmdReponseA.Enabled = true;
                     cmdReponseB.Enabled = true;
                     cmdReponseC.Enabled = true;
-                    Question quest = lstquest[QuestionActuelle];
-                    lblCat.Text = quest.Categories;
-                    lblQuestion.Text = quest.NomQuestion;
-                    cmdReponseA.Text = quest.ReponseA;
-                    cmdReponseB.Text = quest.ReponseB;
-                    cmdReponseC.Text = quest.ReponseC;
-                    bonneReponseQ = quest.BonneReponse;
-                    QuestionActuelle++;
-                    prgQuestion.Increment(1);
+                    AfficherQuestion(QuestionActuelle);
                     tmr1s.Start();
                 }
                 else
@@ -287,7 +288,7 @@ namespace Quizz
                 tmr0_5s.Start();
                 tmr1s.Start();
                 isPaused = false;
-                cmdPause.Text = "Pause";
+                btnPause.Text = "Pause";
             }
             else
             {
@@ -295,7 +296,7 @@ namespace Quizz
                 tmr0_5s.Stop();
                 tmr1s.Stop();
                 isPaused = true;
-                cmdPause.Text = "Reprendre";
+                btnPause.Text = "Reprendre";
             }
         }
     }
