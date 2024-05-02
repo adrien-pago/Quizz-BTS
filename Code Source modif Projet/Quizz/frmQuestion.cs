@@ -1,34 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 namespace Quizz
 {
     public partial class frmQuestion : Form
     {
         //déclaration des variables globales
-        int nombreQuestionTotal;
-        int QuestionActuelle = 0;
-        int bonneReponseQ;
-        int reponseA = 1;
-        int reponseB = 2;
-        int reponseC = 3;
-        int score = 0;
-        int bonneReponse = 0;
-        int mauvaiseReponse = 0;
-        int countTimer0_5s = 0;
-        int countTimer1s = 0;
-        List<Question> lstquest;
-        Joueur joueur;
-        int Categorie;
+        private int nombreQuestionTotal;
+        private int QuestionActuelle = 0;
+        private int bonneReponseQ;
+        private int reponseA = 1;
+        private int reponseB = 2;
+        private int reponseC = 3;
+        private int score = 0;
+        private int bonneReponse = 0;
+        private int mauvaiseReponse = 0;
+        private int countTimer0_5s = 0;
+        private int countTimer1s = 0;
+        private List<Question> lstquest;
+        private Joueur joueur;
+        private int Categorie;
+        private Connection_mySQL connection;
         private bool isPaused;
 
         public int NombreQuestionTotal
@@ -37,12 +31,20 @@ namespace Quizz
         }
 
         // Constructeur de la classe
-        public frmQuestion(Joueur joueur, string categorie)
+        public frmQuestion(Joueur joueur, string categorie, Connection_mySQL connection, List<Question> lstquest)
         {
             InitializeComponent();
-            Connection_mySQL bdd = new Connection_mySQL();
-            lstquest = bdd.selectQuestion(categorie);
-            nombreQuestionTotal = lstquest.Count();
+            this.connection = connection; // Utiliser la connexion passée
+            this.lstquest = lstquest; // Utiliser les questions passées
+            if (lstquest != null)
+            {
+                nombreQuestionTotal = lstquest.Count;
+            }
+            else
+            {
+                // Gérer le cas où lstquest est null
+                nombreQuestionTotal = 0;
+            }
             prgTemps.Visible = true;
             prgTemps.Minimum = 0;
             prgTemps.Maximum = 10;
@@ -54,14 +56,26 @@ namespace Quizz
             prgQuestion.Value = 0;
             prgQuestion.Step = 1;
             this.joueur = joueur;
+            this.connection = connection;
+
+            // Ajout du gestionnaire d'événements pour l'événement FormClosed
+            this.FormClosed += new FormClosedEventHandler(frmQuestion_FormClosed);
         }
 
-      
+
         // Événement de chargement du formulaire
         private void frmQuestion_Load(object sender, EventArgs e)
         {
-            if (lstquest != null && lstquest.Any())
+            if (lstquest != null && lstquest.Count > 0)
             {
+                // Instanciation de l'objet Score avec les valeurs initiales
+                Quizz.Score scoreObject = new Quizz.Score();
+                scoreObject.Pseudo = "nom_du_joueur";
+                scoreObject.Value = 0;
+                scoreObject.Time = TimeSpan.Zero;
+                scoreObject.Categorie = 0;
+
+                // Affichage de la première question
                 Question quest = lstquest[0];
                 lblCat.Text = quest.Categories;
                 lblQuestion.Text = quest.NomQuestion;
@@ -217,14 +231,37 @@ namespace Quizz
                     cmdReponseC.Text = quest.ReponseC;
                     bonneReponseQ = quest.BonneReponse;
                     QuestionActuelle++;
-                    bonneReponse = 0;
-                    prgTemps.Value = 0;
                     prgQuestion.Increment(1);
                     tmr1s.Start();
                 }
                 else
                 {
-                    Dispose();
+                    // S'il n'y a plus de questions, arrêtez le jeu et affichez le score
+                    tmr1s.Stop();
+                    // Affichez le score
+                    MessageBox.Show("Votre score est de : " + score);
+                    // Enregistrez le score dans la base de données
+                    if (connection != null)
+                    {
+                        // Assurez-vous que la connexion est ouverte
+                        if (connection.OpenConnection())
+                        {
+                            // Créez un objet Score avec les détails
+                            Quizz.Score scoreObject = new Quizz.Score();
+                            scoreObject.Pseudo = joueur.Pseudo;
+                            scoreObject.Value = score;
+                            scoreObject.Time = DateTime.Now.TimeOfDay;
+                            scoreObject.Categorie = Categorie;
+
+                            // Appelez la méthode d'insertion dans la classe de connexion pour enregistrer le score
+                            connection.UpdateScore(scoreObject);
+
+                            // Fermez la connexion après avoir enregistré le score
+                            connection.CloseConnection();
+                        }
+                    }
+                    // Fermez le formulaire
+                    this.Close();
                 }
             }
             else
@@ -234,45 +271,31 @@ namespace Quizz
             }
         }
 
-        private void btnPause_Click(object sender, EventArgs e)
+        // Événement de fermeture du formulaire
+        private void frmQuestion_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (!isPaused)
+            // Arrêtez tous les timers pour libérer les ressources
+            tmr0_5s.Stop();
+            tmr1s.Stop();
+        }
+
+        private void cmdPause_Click(object sender, EventArgs e)
+        {
+            if (isPaused)
             {
-                // Mettre en pause le quiz
-                isPaused = true;
-                btnPause.Text = "Reprendre";
-                tmr1s.Stop(); // Arrête le timer
-                tmr0_5s.Stop(); // Arrête le timer
-                Console.WriteLine("Le quiz est en pause.");
+                // Reprendre le jeu
+                tmr0_5s.Start();
+                tmr1s.Start();
+                isPaused = false;
+                cmdPause.Text = "Pause";
             }
             else
             {
-                // Reprendre le quiz
-                isPaused = false;
-                btnPause.Text = "PAUSE";
-                tmr1s.Start(); // Reprend le timer
-                Console.WriteLine("Le quiz a repris.");
-            }
-        }
-
-        private void btnExtractQuizz_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
-            saveFileDialog.Title = "Export Quiz as Text";
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
-                {
-                    foreach (var quest in lstquest)
-                    {
-                        sw.WriteLine("Question: " + quest.NomQuestion);
-                        sw.WriteLine("Options: A. " + quest.ReponseA + " B. " + quest.ReponseB + " C. " + quest.ReponseC);
-                        sw.WriteLine("Correct Answer: " + quest.BonneReponse);
-                        sw.WriteLine(); // Ajoute une ligne vide pour séparer les questions
-                    }
-                }
+                // Mettre en pause le jeu
+                tmr0_5s.Stop();
+                tmr1s.Stop();
+                isPaused = true;
+                cmdPause.Text = "Reprendre";
             }
         }
     }

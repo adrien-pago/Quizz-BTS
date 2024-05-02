@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Quizz;
 
 namespace Quizz
 {
@@ -8,17 +9,19 @@ namespace Quizz
     {
         private Connection_mySQL connection;
         private Joueur joueur;
+        private Score Score;
+        private List<Question> lstQuestions; // Ajout de la liste de questions
 
-        //à L'init de la page
+        // Initialisation de la page
         public frmQuizz()
         {
             InitializeComponent();
             connection = new Connection_mySQL();
             joueur = new Joueur(); // Initialisation de l'objet joueur
-            LoadScoresByCategory();// Affiche le classement avec la fonction LoadScoresByCategory
-
+            LoadScoresByCategory(); // Affiche le classement avec la fonction LoadScoresByCategory
         }
-        // Créer un new compte user
+
+        // Créer un nouveau compte utilisateur
         private void cmdAjouterLePseudo_Click(object sender, EventArgs e)
         {
             string username = txtPseudo.Text.Trim();
@@ -51,10 +54,10 @@ namespace Quizz
             }
         }
 
-        //Afficher scoore dans les différent tableau en fonction des catégorie
+        // Afficher les scores dans les différents tableaux en fonction des catégories
         private void LoadScoresByCategory()
         {
-            Dictionary<string, List<Joueur>> scoresByCategory = connection.SelectScoresByCategory();
+            Dictionary<int, List<Joueur>> scoresByCategory = connection.SelectScoresByCategory();
 
             foreach (KeyValuePair<string, List<Joueur>> entry in scoresByCategory)
             {
@@ -94,22 +97,49 @@ namespace Quizz
                 }
             }
         }
-        // Lancer le quizz
+
+        // Lancer le quiz
         private void jouer_Click(object sender, EventArgs e)
         {
             string username = txtPseudo.Text.Trim();
             string password = txtPassword.Text;
+            string categorie = ""; // Déclarer la variable categorie
+            if (Mathématique.SelectedItem != null)
+                    {
+                categorie = "1";
+            }
+            else if (Programmation.SelectedItem != null)
+                    {
+                categorie = "2";
+            }
+            else if (Culture.SelectedItem != null)
+                    {
+                categorie = "3";
+            }
+
+            Score = new Score(); // Créer une nouvelle instance de Score
+            Score.Pseudo = username;
+            Score.Categorie = Convert.ToInt32(categorie); // Convertir la catégorie en entier
+            Score.Time = TimeSpan.Zero; // Initialiser le temps à zéro
 
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
+                // Assurez-vous que le pseudo est défini avant de continuer
+                joueur.Pseudo = username;
+
                 if (connection.ValidateUser(username, password))
                 {
-                    frmCategorie categorie = new frmCategorie(joueur);
-                    categorie.ShowDialog();
-
-                    frmQuestion question = new frmQuestion(joueur, joueur.Categorie.ToString());
+                    // Passer l'instance de Connection_mySQL et la liste de questions au formulaire frmQuestion
+                    frmQuestion question = new frmQuestion(joueur, categorie, connection, lstQuestions);
                     question.FormClosed += (s, args) => // Événement de fermeture du formulaire frmQuestion
                     {
+                        // Mise à jour du score dans la base de données après la fermeture du formulaire frmQuestion
+                        string pseudo = Score.Pseudo;
+                        int score = Score.Value;
+                        int categorieId = Score.Categorie;
+                        TimeSpan time = Score.Time;
+
+                        connection.UpdateScore(Score); // Passer l'objet Score directement
                         LoadScoresByCategory(); // Rafraîchir les scores après la fermeture du formulaire frmQuestion
                     };
                     question.ShowDialog();
@@ -126,5 +156,3 @@ namespace Quizz
         }
     }
 }
-
-

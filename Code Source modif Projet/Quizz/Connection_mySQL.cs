@@ -4,10 +4,11 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using BCrypt.Net;
 using System.Diagnostics;
+using Quizz;
 
 namespace Quizz
 {
-    class Connection_mySQL // Classe gérant la connexion à la base de données MySQL
+    public class Connection_mySQL // Classe gérant la connexion à la base de données MySQL
     {
         private MySqlConnection connection;
         private string server;
@@ -19,6 +20,7 @@ namespace Quizz
         {
             Initialize();
         }
+
         private void Initialize()// base de donné test
         {
             server = "localhost";
@@ -28,6 +30,7 @@ namespace Quizz
             string connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};";
             connection = new MySqlConnection(connectionString);
         }
+
         private bool OpenConnection()  // Méthode pour ouvrir la connexion à la base de données
         {
             try
@@ -173,74 +176,73 @@ namespace Quizz
 
             return lstQuestions;
         }
-        //Mettre à jours le tableau des scoores
-        public void UpdateScore(string pseudo, int score, int categorie, TimeSpan time) // Modifier le type du paramètre Time en TimeSpan
+
+        // Mettre à jour le nouveau score en base de données ou bien modifier si le joueur a déjà joué dans la catégorie
+        public void UpdateScore(Score score)
         {
             if (OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand("UPDATE Joueurs SET Score = @Score, Categorie = @Categorie, Time = @Time WHERE Pseudo = @Pseudo", connection);
-                cmd.Parameters.AddWithValue("@Score", score);
-                cmd.Parameters.AddWithValue("@Pseudo", pseudo);
-                cmd.Parameters.AddWithValue("@Categorie", categorie);
-                cmd.Parameters.AddWithValue("@Time", time.ToString("c")); // Convertir TimeSpan en chaîne de caractères au format HH:mm:ss
-                cmd.ExecuteNonQuery();
-                CloseConnection();
-            }
-        }
+                // Vérifier si le joueur a déjà joué dans cette catégorie
+                MySqlCommand selectCmd = new MySqlCommand("SELECT COUNT(*) FROM score WHERE Pseudo = @Pseudo AND Categorie = @Categorie", connection);
+                selectCmd.Parameters.AddWithValue("@Pseudo", score.Pseudo);
+                selectCmd.Parameters.AddWithValue("@Categorie", score.Categorie);
+                int count = Convert.ToInt32(selectCmd.ExecuteScalar());
 
-        //afficher liste des joueurs et leur scoores
-        public List<Joueur> selectJoueur()
-        {
-            List<Joueur> lstJoueur = new List<Joueur>();
-
-            if (OpenConnection())
-            {
-                MySqlCommand cmd = new MySqlCommand("SELECT Pseudo, Score, Time FROM Joueurs ORDER BY Score DESC", connection);
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                if (count > 0)
                 {
-                    while (reader.Read())
-                    {
-                        Joueur joueur = new Joueur();
-                        joueur.Pseudo = reader["Pseudo"].ToString();
-                        joueur.Score = Convert.ToInt32(reader["Score"]);
-                        lstJoueur.Add(joueur);
-                    }
+                    // Le joueur a déjà joué dans cette catégorie, donc effectuer une mise à jour
+                    MySqlCommand updateCmd = new MySqlCommand("UPDATE score SET Score = @Score, Time = @Time WHERE Pseudo = @Pseudo AND Categorie = @Categorie", connection);
+                    updateCmd.Parameters.AddWithValue("@Score", score.Value);
+                    updateCmd.Parameters.AddWithValue("@Pseudo", score.Pseudo);
+                    updateCmd.Parameters.AddWithValue("@Categorie", score.Categorie);
+                    updateCmd.Parameters.AddWithValue("@Time", score.Time.ToString("c")); // Convertir TimeSpan en chaîne de caractères au format HH:mm:ss
+                    updateCmd.ExecuteNonQuery();
                 }
+                else
+                {
+                    // Le joueur n'a jamais joué dans cette catégorie, donc insérer une nouvelle ligne
+                    MySqlCommand insertCmd = new MySqlCommand("INSERT INTO score (Pseudo, Score, Categorie, Time) VALUES (@Pseudo, @Score, @Categorie, @Time)", connection);
+                    insertCmd.Parameters.AddWithValue("@Pseudo", score.Pseudo);
+                    insertCmd.Parameters.AddWithValue("@Score", score.Value);
+                    insertCmd.Parameters.AddWithValue("@Categorie", score.Categorie);
+                    insertCmd.Parameters.AddWithValue("@Time", score.Time.ToString("c")); // Convertir TimeSpan en chaîne de caractères au format HH:mm:ss
+                    insertCmd.ExecuteNonQuery();
+                }
+
                 CloseConnection();
             }
-            return lstJoueur;
         }
-        //Récupérer liste des joueurs en fonction du scoore du time et de la catégorie
-        public Dictionary<string, List<Joueur>> SelectScoresByCategory()
+
+        // Récupérer liste des joueurs en fonction du score du time et de la catégorie
+        public Dictionary<int, List<Score>> SelectScoresByCategory()
         {
-            Dictionary<string, List<Joueur>> scoresByCategory = new Dictionary<string, List<Joueur>>();
+            Dictionary<int, List<Score>> scoresByCategory = new Dictionary<int, List<Score>>();
 
             if (OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT Pseudo, Score, Time, Categorie FROM Joueurs  ORDER BY Score DESC", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Pseudo, Score, Time, Categorie FROM score  ORDER BY Score DESC", connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Joueur joueur = new Joueur();
-                        joueur.Pseudo = reader["Pseudo"].ToString();
-                        joueur.Score = Convert.ToInt32(reader["Score"]);
-                        joueur.Time = TimeSpan.Parse(reader["Time"].ToString());
-                        joueur.Categorie = Convert.ToInt32(reader["Categorie"]);
-
-                        if (!scoresByCategory.ContainsKey(joueur.Categorie.ToString()))
+                        Score score = new Score();
+                        score.Pseudo = reader["Pseudo"].ToString();
+                        score.Value = Convert.ToInt32(reader["Score"]);
+                        score.Time = TimeSpan.Parse(reader["Time"].ToString());
+                        score.Categorie = Convert.ToInt32(reader["Categorie"]);
+                        if (!scoresByCategory.ContainsKey(score.Categorie))
                         {
-                            scoresByCategory[joueur.Categorie.ToString()] = new List<Joueur>();
+                            scoresByCategory[score.Categorie] = new List<Score>();
                         }
-
-                        scoresByCategory[joueur.Categorie.ToString()].Add(joueur);
+                        scoresByCategory[score.Categorie].Add(score);
                     }
                 }
                 CloseConnection();
             }
-
             return scoresByCategory;
         }
+
+
 
 
     }

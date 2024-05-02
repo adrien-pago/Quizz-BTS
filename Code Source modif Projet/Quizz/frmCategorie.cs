@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Quizz;
 
 namespace Quizz
 {
     public partial class frmCategorie : Form
     {
+        private Joueur joueur;
+        private Connection_mySQL connection;
+        private List<Question> lstQuestions; // Ajout de la liste de questions
 
-        Joueur joueur;
-
-
-        public frmCategorie(Joueur joueur) // Constructeur de la classe
+        public frmCategorie(Joueur joueur, Connection_mySQL connection, List<Question> lstQuestions) // Modification du constructeur
         {
             InitializeComponent();
             this.joueur = joueur;
+            this.connection = connection;
+            this.lstQuestions = lstQuestions; // Initialisation de la liste de questions
         }
 
         // Événement de chargement du formulaire
@@ -33,7 +30,7 @@ namespace Quizz
 
         }
 
-        // Choix des fonctions pour la séléction de catégorie
+        // Choix des fonctions pour la sélection de catégorie
         private void btnClickChoice(object sender, EventArgs e)
         {
             Button boutonClick = sender as Button;
@@ -42,12 +39,13 @@ namespace Quizz
             {
                 string categorie = boutonClick.Tag as string;
                 cmdChoice(categorie);
-            }     
+            }
         }
+
         // Méthode pour gérer le choix de la catégorie
         private void cmdChoice(string categorie)
         {
-            frmQuestion question = new frmQuestion(joueur, categorie); // Passer la catégorie sélectionnée 
+            frmQuestion question = new frmQuestion(joueur, categorie, connection, lstQuestions);
             if (question.NombreQuestionTotal == 0)
             {
                 MessageBox.Show("Pas de question pour cette catégorie");
@@ -58,5 +56,5 @@ namespace Quizz
                 Dispose();
             }
         }
-    }   
+    }
 }

@@ -95,6 +95,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="Score.cs" />
     <EmbeddedResource Include="frmCategorie.resx">
       <DependentUpon>frmCategorie.cs</DependentUpon>
     </EmbeddedResource>
