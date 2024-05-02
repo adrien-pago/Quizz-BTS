@@ -28,7 +28,7 @@ namespace Quizz
         int countTimer1s = 0;
         List<Question> lstquest;
         Joueur joueur;
-        string categorie;
+        int Categorie;
         private bool isPaused;
 
         public int NombreQuestionTotal
@@ -56,20 +56,30 @@ namespace Quizz
             this.joueur = joueur;
         }
 
+      
         // Événement de chargement du formulaire
         private void frmQuestion_Load(object sender, EventArgs e)
         {
-            Question quest = lstquest[0];
-            lblCat.Text = quest.Categories;
-            lblQuestion.Text = quest.NomQuestion;
-            cmdReponseA.Text = quest.ReponseA;
-            cmdReponseB.Text = quest.ReponseB;
-            cmdReponseC.Text = quest.ReponseC;
-            bonneReponseQ = quest.BonneReponse;
-            QuestionActuelle = 1;
-            prgQuestion.Increment(1);
-            tmr1s.Start();
+            if (lstquest != null && lstquest.Any())
+            {
+                Question quest = lstquest[0];
+                lblCat.Text = quest.Categories;
+                lblQuestion.Text = quest.NomQuestion;
+                cmdReponseA.Text = quest.ReponseA;
+                cmdReponseB.Text = quest.ReponseB;
+                cmdReponseC.Text = quest.ReponseC;
+                bonneReponseQ = quest.BonneReponse;
+                QuestionActuelle = 1;
+                prgQuestion.Increment(1);
+                tmr1s.Start();
+            }
+            else
+            {
+                MessageBox.Show("Aucune question n'a été chargée.");
+                this.Close(); // Fermer le formulaire si aucune question n'a été chargée
+            }
         }
+
 
         // Méthodes pour gérer les clics sur les boutons de réponse
         private void cmdReponseA_Click(object sender, EventArgs e)

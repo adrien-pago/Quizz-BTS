@@ -49,7 +49,7 @@ namespace Quizz
                 return false;
             }
         }
-       
+
         private bool CloseConnection() // fermer la connection
         {
             try
@@ -64,7 +64,7 @@ namespace Quizz
             }
         }
         //Ajouter un new user à la base de donné
-        public bool AddUser(string nomJoueur, string password)   
+        public bool AddUser(string nomJoueur, string password)
         {
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
             if (OpenConnection())
@@ -151,7 +151,7 @@ namespace Quizz
 
             if (OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT Nom, Question, Reponse_1, Reponse_2, Reponse_3, Bonne FROM question INNER JOIN categories ON idCategories = Fkcategories AND Fkcategories = '"+categorie+"' ORDER BY idQuestion", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Nom, Question, Reponse_1, Reponse_2, Reponse_3, Bonne FROM question INNER JOIN categories ON idCategories = Fkcategories AND Fkcategories = '" + categorie + "' ORDER BY idQuestion", connection);
 
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -174,17 +174,20 @@ namespace Quizz
             return lstQuestions;
         }
         //Mettre à jours le tableau des scoores
-        public void UpdateScore(string pseudo, int score)
+        public void UpdateScore(string pseudo, int score, int categorie, TimeSpan time) // Modifier le type du paramètre Time en TimeSpan
         {
             if (OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand("UPDATE Joueurs SET Score = @Score WHERE Pseudo = @Pseudo", connection);
+                MySqlCommand cmd = new MySqlCommand("UPDATE Joueurs SET Score = @Score, Categorie = @Categorie, Time = @Time WHERE Pseudo = @Pseudo", connection);
                 cmd.Parameters.AddWithValue("@Score", score);
                 cmd.Parameters.AddWithValue("@Pseudo", pseudo);
+                cmd.Parameters.AddWithValue("@Categorie", categorie);
+                cmd.Parameters.AddWithValue("@Time", time.ToString("c")); // Convertir TimeSpan en chaîne de caractères au format HH:mm:ss
                 cmd.ExecuteNonQuery();
                 CloseConnection();
             }
         }
+
         //afficher liste des joueurs et leur scoores
         public List<Joueur> selectJoueur()
         {
@@ -192,7 +195,7 @@ namespace Quizz
 
             if (OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT Pseudo, Score FROM Joueurs ORDER BY Score DESC", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT Pseudo, Score, Time FROM Joueurs ORDER BY Score DESC", connection);
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -207,5 +210,38 @@ namespace Quizz
             }
             return lstJoueur;
         }
+        //Récupérer liste des joueurs en fonction du scoore du time et de la catégorie
+        public Dictionary<string, List<Joueur>> SelectScoresByCategory()
+        {
+            Dictionary<string, List<Joueur>> scoresByCategory = new Dictionary<string, List<Joueur>>();
+
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT Pseudo, Score, Time, Categorie FROM Joueurs  ORDER BY Score DESC", connection);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Joueur joueur = new Joueur();
+                        joueur.Pseudo = reader["Pseudo"].ToString();
+                        joueur.Score = Convert.ToInt32(reader["Score"]);
+                        joueur.Time = TimeSpan.Parse(reader["Time"].ToString());
+                        joueur.Categorie = Convert.ToInt32(reader["Categorie"]);
+
+                        if (!scoresByCategory.ContainsKey(joueur.Categorie.ToString()))
+                        {
+                            scoresByCategory[joueur.Categorie.ToString()] = new List<Joueur>();
+                        }
+
+                        scoresByCategory[joueur.Categorie.ToString()].Add(joueur);
+                    }
+                }
+                CloseConnection();
+            }
+
+            return scoresByCategory;
+        }
+
+
     }
 }

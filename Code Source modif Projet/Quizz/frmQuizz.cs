@@ -15,7 +15,7 @@ namespace Quizz
             InitializeComponent();
             connection = new Connection_mySQL();
             joueur = new Joueur(); // Initialisation de l'objet joueur
-            LoadClassement();// Affiche le classement avec la fonction LoadClassement
+            LoadScoresByCategory();// Affiche le classement avec la fonction LoadScoresByCategory
 
         }
         // Créer un new compte user
@@ -50,8 +50,52 @@ namespace Quizz
                 MessageBox.Show("Veuillez remplir tous les champs.");
             }
         }
-        //Lancer le quizz en vérifiant le compte avant
-        private void cmdDebut_Click(object sender, EventArgs e)
+
+        //Afficher scoore dans les différent tableau en fonction des catégorie
+        private void LoadScoresByCategory()
+        {
+            Dictionary<string, List<Joueur>> scoresByCategory = connection.SelectScoresByCategory();
+
+            foreach (KeyValuePair<string, List<Joueur>> entry in scoresByCategory)
+            {
+                string category = entry.Key;
+                List<Joueur> scores = entry.Value;
+
+                switch (category)
+                {
+                    case "1":
+                        Mathématique.Items.Clear();
+                        foreach (Joueur joueur in scores)
+                        {
+                            Mathématique.Items.Add(joueur.ToString());
+                        }
+                        break;
+                    case "3":
+                        Culture.Items.Clear();
+                        foreach (Joueur joueur in scores)
+                        {
+                            Culture.Items.Add(joueur.ToString());
+                        }
+                        break;
+                    case "2":
+                        Programmation.Items.Clear();
+                        foreach (Joueur joueur in scores)
+                        {
+                            Programmation.Items.Add(joueur.ToString());
+                        }
+                        break;
+                    case "4": // Afficher dans le tableau de toutes les catégories
+                        Classement.Items.Clear();
+                        foreach (Joueur joueur in scores)
+                        {
+                            Classement.Items.Add(joueur.ToString());
+                        }
+                        break;
+                }
+            }
+        }
+        // Lancer le quizz
+        private void jouer_Click(object sender, EventArgs e)
         {
             string username = txtPseudo.Text.Trim();
             string password = txtPassword.Text;
@@ -60,28 +104,15 @@ namespace Quizz
             {
                 if (connection.ValidateUser(username, password))
                 {
-                    // frmQuestion question = new frmQuestion(joueur);
-                    // question.ShowDialog();
-
-                    //Lance la fenetre de choix de la catégorie
                     frmCategorie categorie = new frmCategorie(joueur);
                     categorie.ShowDialog();
 
-                    Connection_mySQL bdd = new Connection_mySQL();
-                    bdd.UpdateScore(joueur.Pseudo, joueur.Score);
-                    List<Joueur> lstJoueur = bdd.selectJoueur();
-
-                    if (lstJoueur.Count > 0)
+                    frmQuestion question = new frmQuestion(joueur, joueur.Categorie.ToString());
+                    question.FormClosed += (s, args) => // Événement de fermeture du formulaire frmQuestion
                     {
-                        Classement.Items.Clear();
-                        foreach (Joueur j in lstJoueur)
-                        {
-                            Classement.Items.Add(j.ToString());
-                        }
-                    }
-                    lstJoueur.Clear();
-                    cmdAjouterLePseudo.Enabled = true;
-                    cmdDebut.Enabled = false;
+                        LoadScoresByCategory(); // Rafraîchir les scores après la fermeture du formulaire frmQuestion
+                    };
+                    question.ShowDialog();
                 }
                 else
                 {
@@ -93,44 +124,7 @@ namespace Quizz
                 MessageBox.Show("Veuillez saisir le pseudo et le mot de passe.");
             }
         }
-
-        //Charger le quizz et mettre à jour liste des joueurs
-        private void frmQuizz_Load(object sender, EventArgs e)
-        {
-            List<Joueur> lstJoueur = connection.selectJoueur();
-            if (lstJoueur.Count > 0)
-            {
-                Classement.Items.Clear();
-                foreach (Joueur j in lstJoueur)
-                {
-                    Classement.Items.Add(j.ToString());
-                }
-            }
-        }
-
-        //Afficher le score des anciennes parties
-        private void LoadClassement()
-        {
-            Classement.Items.Clear();  //nom de la ListBox 
-
-            List<Joueur> lstJoueur = connection.selectJoueur();
-            if (lstJoueur.Count > 0)
-            {
-                foreach (Joueur j in lstJoueur)
-                {
-                    string displayText = $"{j.Pseudo} - Score: {j.Score}";
-                    Classement.Items.Add(displayText);
-                }
-            }
-            else
-            {
-                Classement.Items.Add("Aucun joueur trouvé.");
-            }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
+
+

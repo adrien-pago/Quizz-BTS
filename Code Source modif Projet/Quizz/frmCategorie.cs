@@ -27,7 +27,7 @@ namespace Quizz
         {
 
         }
-
+        //Quand on clique sur le libelle 
         private void label1_Click(object sender, EventArgs e)
         {
 
