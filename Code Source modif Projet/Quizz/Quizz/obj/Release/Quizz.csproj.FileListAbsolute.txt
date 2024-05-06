@@ -1,0 +1,6 @@
+C:\Users\adrie\source\repos\Quizz-BTS\Quizz\obj\Release\Quizz.csproj.AssemblyReference.cache
+C:\Users\adrie\source\repos\Quizz-BTS\Quizz\obj\Release\Quizz.Properties.Resources.resources
+C:\Users\adrie\source\repos\Quizz-BTS\Quizz\obj\Release\Quizz.frmQuestion.resources
+C:\Users\adrie\source\repos\Quizz-BTS\Quizz\obj\Release\Quizz.frmQuizz.resources
+C:\Users\adrie\source\repos\Quizz-BTS\Quizz\obj\Release\Quizz.csproj.GenerateResource.cache
+C:\Users\adrie\source\repos\Quizz-BTS\Quizz\obj\Release\Quizz.csproj.CoreCompileInputs.cache

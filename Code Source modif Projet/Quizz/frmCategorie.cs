@@ -10,16 +10,16 @@ namespace Quizz
     {
         private Joueur joueur;
         private Connection_mySQL connection;
-        private List<Question> lstQuestions; // Ajout de la liste de questions
+        private List<Question> lstQuestions;
 
         public string SelectedCategorie { get; internal set; }
 
-        public frmCategorie(Joueur joueur, Connection_mySQL connection, List<Question> lstQuestions) // Modification du constructeur
+        public frmCategorie(Joueur joueur, Connection_mySQL connection, List<Question> lstQuestions)
         {
             InitializeComponent();
             this.joueur = joueur;
             this.connection = connection;
-            this.lstQuestions = lstQuestions; // Initialisation de la liste de questions
+            this.lstQuestions = lstQuestions;
         }
 
         // Événement de chargement du formulaire
@@ -48,12 +48,9 @@ namespace Quizz
         // Méthode pour gérer le choix de la catégorie
         private void cmdChoice(string categorie)
         {
-            // Convertissez la catégorie en int si nécessaire
             int categorieId = Convert.ToInt32(categorie);
+            SelectedCategorie = categorie; // Définir la catégorie sélectionnée
             frmQuestion question = new frmQuestion(joueur, categorieId, connection, lstQuestions);
-     
-            // Ajoutez un message de débogage pour vérifier la valeur de NombreQuestionTotal
-            Debug.WriteLine("Nombre total de questions pour la catégorie " + categorie + " : " + question.NombreQuestionTotal);
 
             if (question.NombreQuestionTotal == 0)
             {

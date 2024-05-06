@@ -8,7 +8,6 @@ namespace Quizz
 {
     public partial class frmQuestion : Form
     {
-        //déclaration des variables globales
         private int nombreQuestionTotal;
         private int QuestionActuelle = 0;
         private int bonneReponseQ;
@@ -33,19 +32,18 @@ namespace Quizz
             get { return nombreQuestionTotal; }
         }
 
-        // Constructeur de la classe
-        public frmQuestion(Joueur joueur, int categorie, Connection_mySQL connection, List<Question> lstquest)
+        public frmQuestion(Joueur joueur, int categorie, Connection_mySQL connection,  List<Question> lstQuestions)
         {
             InitializeComponent();
-            this.connection = connection; // Utiliser la connexion passée
-            this.lstquest = lstquest; // Utiliser les questions passées
+            this.connection = connection;
+            this.lstQuestions = lstquest;
+            this.Categorie = categorie; // Assigner la catégorie passée en paramètre
             if (lstquest != null)
             {
                 nombreQuestionTotal = lstquest.Count;
             }
             else
             {
-                // Gérer le cas où lstquest est null
                 nombreQuestionTotal = 0;
             }
             prgTemps.Visible = true;
@@ -60,36 +58,27 @@ namespace Quizz
             prgQuestion.Step = 1;
             this.joueur = joueur;
             this.connection = connection;
-
-            // Ajout du gestionnaire d'événements pour l'événement FormClosed
+            this.lstQuestions = lstQuestions;
             this.FormClosed += new FormClosedEventHandler(frmQuestion_FormClosed);
         }
 
-        public frmQuestion(Joueur joueur, string selectedCategorie, Connection_mySQL connection, List<Question> lstQuestions)
-        {
-            this.joueur = joueur;
-            this.selectedCategorie = selectedCategorie;
-            this.connection = connection;
-            this.lstQuestions = lstQuestions;
-        }
-
-
-        // Événement de chargement du formulaire
         private void frmQuestion_Load(object sender, EventArgs e)
         {
-            if (nombreQuestionTotal == 0)
+            // Filtrer les questions par catégorie
+            List<Question> questionsParCategorie = lstQuestions.FindAll(q => q.Categories == selectedCategorie);
+
+            if (questionsParCategorie.Count == 0)
             {
-                // Affichez un message indiquant qu'il n'y a pas de questions disponibles
-                MessageBox.Show("Aucune question n'est disponible pour cette catégorie.");
-                // Fermez le formulaire
+                MessageBox.Show("Aucune question trouvée pour cette catégorie.");
                 this.Close();
                 return;
             }
 
-            // Affichez la première question
-            AfficherQuestion(0);
-            tmr1s.Start();
+            nombreQuestionTotal = questionsParCategorie.Count; // Mettre à jour le nombre total de questions
+            AfficherQuestion(0); // Afficher la première question
+            tmr1s.Start(); // Démarrer le timer
         }
+
 
         private void AfficherQuestion(int index)
         {

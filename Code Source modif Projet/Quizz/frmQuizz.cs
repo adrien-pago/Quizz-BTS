@@ -111,32 +111,38 @@ namespace Quizz
             // Si l'utilisateur a sélectionné une catégorie et a cliqué sur "OK"
             if (result == DialogResult.OK && !string.IsNullOrEmpty(categorieForm.SelectedCategorie))
             {
-                string categorie = categorieForm.SelectedCategorie; // Récupérer la catégorie sélectionnée
-
-                // Chargez la liste de questions
-                lstQuestions = connection.selectQuestion(categorieForm.SelectedCategorie);
-
-                // Si la liste de questions est chargée avec succès
-                if (lstQuestions != null && lstQuestions.Count > 0)
+                int categorieId;
+                if (int.TryParse(categorieForm.SelectedCategorie, out categorieId))
                 {
-                    // Passez la liste de questions à frmQuestion
-                    frmQuestion question = new frmQuestion(joueur, categorieForm.SelectedCategorie, connection, lstQuestions);
-                    question.FormClosed += (s, args) => // Événement de fermeture du formulaire frmQuestion
-                    {
-                        // Mise à jour du score dans la base de données après la fermeture du formulaire frmQuestion
-                        string pseudo = Score.Pseudo;
-                        int score = Score.Value;
-                        int categorieId = Score.Categorie;
-                        TimeSpan time = Score.Time;
+                    // Chargez la liste de questions
+                    lstQuestions = connection.selectQuestion(categorieForm.SelectedCategorie);
 
-                        connection.UpdateScore(Score); // Passer l'objet Score directement
-                        LoadScoresByCategory(); // Rafraîchir les scores après la fermeture du formulaire frmQuestion
-                    };
-                    question.ShowDialog();
+                    // Si la liste de questions est chargée avec succès
+                    if (lstQuestions != null && lstQuestions.Count > 0)
+                    {
+                        // Passez la liste de questions à frmQuestion
+                        frmQuestion question = new frmQuestion(joueur, categorieId, connection, lstQuestions);
+                        question.FormClosed += (s, args) => // Événement de fermeture du formulaire frmQuestion
+                        {
+                            // Mise à jour du score dans la base de données après la fermeture du formulaire frmQuestion
+                            string pseudo = Score.Pseudo;
+                            int score = Score.Value;
+                            int catId = Score.Categorie; // Renommer la variable pour éviter le conflit de nom
+                            TimeSpan time = Score.Time;
+
+                            connection.UpdateScore(Score); // Passer l'objet Score directement
+                            LoadScoresByCategory(); // Rafraîchir les scores après la fermeture du formulaire frmQuestion
+                        };
+                        question.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Aucune question trouvée pour cette catégorie.");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Aucune question trouvée pour cette catégorie.");
+                    MessageBox.Show("Erreur de conversion de la catégorie en entier.");
                 }
             }
         }

@@ -147,13 +147,9 @@ namespace Quizz
 
 
         // récupérer une liste de question
-        // récupérer une liste de question
         public List<Question> selectQuestion(string categorie)
         {
             // Ajouter une instruction de débogage pour vérifier la valeur de la catégorie
-            Debug.WriteLine("Valeur de la catégorie : " + categorie);
-            MessageBox.Show("Valeur de la catégorie : " + categorie);
-
             List<Question> lstQuestions = new List<Question>();
 
             if (OpenConnection())
