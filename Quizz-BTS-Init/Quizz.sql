@@ -36,7 +36,7 @@ ENGINE = INNODB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `quizz_init`.`Categories` ;
 
-CREATE TABLE IF NOT EXISTS `quizz_init_init`.`Categories` (
+CREATE TABLE IF NOT EXISTS `quizz_init`.`Categories` (
   `idCategories` INT NOT NULL AUTO_INCREMENT,
   `Nom` TEXT NOT NULL,
   PRIMARY KEY (`idCategories`))

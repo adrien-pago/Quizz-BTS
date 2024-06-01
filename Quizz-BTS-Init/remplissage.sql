@@ -1,4 +1,4 @@
-USE quizz;
+USE quizz_init;
 INSERT INTO categories (Nom) VALUE
 ("Math"),
 ("Programmation"),
