@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema Quizz
+-- Schema quizz_init
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `Quizz` ;
+DROP SCHEMA IF EXISTS `quizz_init` ;
 
 -- -----------------------------------------------------
--- Schema Quizz
+-- Schema quizz_init
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Quizz` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `Quizz` ;
+CREATE SCHEMA IF NOT EXISTS `quizz_init` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `quizz_init` ;
 
 -- -----------------------------------------------------
--- Table `Quizz`.`Joueurs`
+-- Table `quizz_init`.`Joueurs`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Quizz`.`Joueurs` ;
+DROP TABLE IF EXISTS `quizz_init`.`Joueurs` ;
 
-CREATE TABLE IF NOT EXISTS `Quizz`.`Joueurs` (
+CREATE TABLE IF NOT EXISTS `quizz_init`.`Joueurs` (
   `idJoueurs` INT NOT NULL AUTO_INCREMENT,
   `Pseudo` VARCHAR(105) NOT NULL,
   `score` TINYINT NOT NULL,
@@ -32,11 +32,11 @@ ENGINE = INNODB;
 
 
 -- -----------------------------------------------------
--- Table `Quizz`.`Categories`
+-- Table `quizz_init`.`Categories`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Quizz`.`Categories` ;
+DROP TABLE IF EXISTS `quizz_init`.`Categories` ;
 
-CREATE TABLE IF NOT EXISTS `Quizz`.`Categories` (
+CREATE TABLE IF NOT EXISTS `quizz_init_init`.`Categories` (
   `idCategories` INT NOT NULL AUTO_INCREMENT,
   `Nom` TEXT NOT NULL,
   PRIMARY KEY (`idCategories`))
@@ -44,11 +44,11 @@ ENGINE = INNODB;
 
 
 -- -----------------------------------------------------
--- Table `Quizz`.`Question`
+-- Table `quizz_init_init`.`Question`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Quizz`.`Question` ;
+DROP TABLE IF EXISTS `quizz_init`.`Question` ;
 
-CREATE TABLE IF NOT EXISTS `Quizz`.`Question` (
+CREATE TABLE IF NOT EXISTS `quizz_init`.`Question` (
   `idQuestion` INT NOT NULL AUTO_INCREMENT,
   `Question` TEXT NOT NULL,
   `Fkcategories` INT NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Quizz`.`Question` (
   INDEX `fk_Question_catégories1_idx` (`Fkcategories` ASC),
   CONSTRAINT `fk_Question_catégories1`
     FOREIGN KEY (`Fkcategories`)
-    REFERENCES `Quizz`.`Categories` (`idCategories`)
+    REFERENCES `quizz_init`.`Categories` (`idCategories`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = INNODB;
